@@ -14,6 +14,8 @@ Tested with PrestaShop 9.0.
 
 ## Setup
 
+1. Download files from this repository and move them to a folder named `zenaisearch`.
+2. Create a zip archive with that folder.
 1. Install and activate module `zenaisearch` in Back Office.
 2. Open module configuration.
 3. Add your API token from https://zenaisoftware.com/dashboard/api.
