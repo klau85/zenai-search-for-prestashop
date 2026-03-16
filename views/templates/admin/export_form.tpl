@@ -1,5 +1,4 @@
-<?php
-/**
+{*
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
@@ -22,29 +21,18 @@
  * @author    ZenAI Software
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
- */
-if (!defined('_PS_VERSION_')) {
-    exit;
-}
+ *}
 
-use PrestaShop\PrestaShop\Core\Product\Search\ProductSearchContext;
-use PrestaShop\PrestaShop\Core\Product\Search\ProductSearchProviderInterface;
-use PrestaShop\PrestaShop\Core\Product\Search\ProductSearchQuery;
-
-class ZenaiProductSearchProvider implements ProductSearchProviderInterface
-{
-    /**
-     * @var ZenaiSearchRunner
-     */
-    private $runner;
-
-    public function __construct(ZenaiSearchRunner $runner)
-    {
-        $this->runner = $runner;
-    }
-
-    public function runQuery(ProductSearchContext $context, ProductSearchQuery $query)
-    {
-        return $this->runner->runQuery($context, $query);
-    }
-}
+<div class="panel">
+  <h3>
+    <i class="icon-download"></i>
+    {$zenai_export_title|escape:'htmlall':'UTF-8'}
+  </h3>
+  <p>{$zenai_export_description|escape:'htmlall':'UTF-8'}</p>
+  <form method="post">
+    <button type="submit" class="btn btn-default" name="submitZenaiSearchExport">
+      <i class="process-icon-download"></i>
+      {$zenai_export_button_label|escape:'htmlall':'UTF-8'}
+    </button>
+  </form>
+</div>

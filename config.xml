@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
     <name>zenaisearch</name>
-    <displayName><![CDATA[Zenai Search]]></displayName>
+    <displayName><![CDATA[ZenAI Search]]></displayName>
     <version><![CDATA[1.0.0]]></version>
-    <description><![CDATA[Adds AI mode to storefront search and integrates Zenai search results.]]></description>
-    <author><![CDATA[Zenai]]></author>
+    <description><![CDATA[Adds AI mode to storefront search and uses ZenAI recommendations for search results.]]></description>
+    <author><![CDATA[ZenAI Software]]></author>
     <is_configurable>1</is_configurable>
     <need_instance>0</need_instance>
     <limited_countries></limited_countries>

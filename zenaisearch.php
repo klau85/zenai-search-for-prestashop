@@ -1,4 +1,28 @@
 <?php
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
+ *
+ * @author    ZenAI Software
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+ */
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -22,15 +46,15 @@ class Zenaisearch extends Module
         $this->name = 'zenaisearch';
         $this->tab = 'front_office_features';
         $this->version = '1.0.0';
-        $this->author = 'Zenai';
+        $this->author = 'ZenAI Software';
         $this->need_instance = 0;
         $this->bootstrap = true;
 
         parent::__construct();
 
-        $this->displayName = $this->trans('Zenai Search', [], 'Modules.Zenaisearch.Admin');
-        $this->description = $this->trans('Adds AI mode to storefront search and uses Zenai recommendations for search results.', [], 'Modules.Zenaisearch.Admin');
-        $this->ps_versions_compliancy = ['min' => '1.7.8.0', 'max' => _PS_VERSION_];
+        $this->displayName = $this->trans('ZenAI Search', [], 'Modules.Zenaisearch.Admin');
+        $this->description = $this->trans('Adds AI mode to storefront search and uses ZenAI recommendations for search results.', [], 'Modules.Zenaisearch.Admin');
+        $this->ps_versions_compliancy = ['min' => '9.0.0', 'max' => _PS_VERSION_];
     }
 
     public function install()
@@ -171,16 +195,12 @@ class Zenaisearch extends Module
 
     private function renderExportForm()
     {
-        $html = '<div class="panel">';
-        $html .= '<h3><i class="icon-download"></i> ' . $this->trans('Zenai Product Export', [], 'Modules.Zenaisearch.Admin') . '</h3>';
-        $html .= '<p>' . $this->trans('Export products as CSV and import them in Zenai CSV Upload.', [], 'Modules.Zenaisearch.Admin') . '</p>';
-        $html .= '<form method="post">';
-        $html .= '<button type="submit" class="btn btn-default" name="submitZenaiSearchExport">';
-        $html .= '<i class="process-icon-download"></i> ' . $this->trans('Export CSV', [], 'Modules.Zenaisearch.Admin');
-        $html .= '</button>';
-        $html .= '</form>';
-        $html .= '</div>';
+        $this->context->smarty->assign([
+            'zenai_export_title' => $this->trans('Zenai Product Export', [], 'Modules.Zenaisearch.Admin'),
+            'zenai_export_description' => $this->trans('Export products as CSV and import them in Zenai CSV Upload.', [], 'Modules.Zenaisearch.Admin'),
+            'zenai_export_button_label' => $this->trans('Export CSV', [], 'Modules.Zenaisearch.Admin'),
+        ]);
 
-        return $html;
+        return $this->fetch('module:' . $this->name . '/views/templates/admin/export_form.tpl');
     }
 }
