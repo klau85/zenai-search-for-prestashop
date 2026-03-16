@@ -18,6 +18,7 @@ class Zenaisearch extends Module
 
     public function __construct()
     {
+        $this->module_key = 'c1fa07ad5b94644d6f33ae088cbeb209';
         $this->name = 'zenaisearch';
         $this->tab = 'front_office_features';
         $this->version = '1.0.0';
