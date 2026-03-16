@@ -37,8 +37,8 @@ $(function () {
     }
 
     var config = window.zenaiSearchConfig || {};
-    var storageKey = config.modeStorageKey || 'zenaiSearch.mode';
-    var defaultMode = config.defaultMode || 'ai';
+    var storageKey = sanitizeStorageKey(config.modeStorageKey) || 'zenaiSearch.mode';
+    var defaultMode = normalizeMode(config.defaultMode) || 'ai';
     var labels = {
         ai: config.aiLabel || 'AI Mode',
         classic: config.searchLabel || 'Search'
@@ -53,11 +53,7 @@ $(function () {
     $form.append($modeWrap);
 
     var modeFromUrl = getModeFromUrl();
-    var mode = modeFromUrl || loadMode() || defaultMode;
-
-    if (mode !== 'ai' && mode !== 'classic') {
-        mode = defaultMode;
-    }
+    var mode = normalizeMode(modeFromUrl) || loadMode() || defaultMode;
 
     $modeSelect.val(mode);
     syncHiddenField();
@@ -76,7 +72,11 @@ $(function () {
 
     function loadMode() {
         try {
-            return window.localStorage ? window.localStorage.getItem(storageKey) : null;
+            if (!window.localStorage) {
+                return null;
+            }
+
+            return normalizeMode(window.localStorage.getItem(storageKey));
         } catch (e) {
             return null;
         }
@@ -84,8 +84,10 @@ $(function () {
 
     function persistMode(value) {
         try {
-            if (window.localStorage) {
-                window.localStorage.setItem(storageKey, value);
+            var normalizedValue = normalizeMode(value);
+
+            if (window.localStorage && normalizedValue) {
+                window.localStorage.setItem(storageKey, normalizedValue);
             }
         } catch (e) {
             // Ignore storage errors
@@ -132,9 +134,25 @@ $(function () {
     function getModeFromUrl() {
         try {
             var params = new URLSearchParams(window.location.search || '');
-            return params.get('zenai') === '1' ? 'ai' : null;
+            return normalizeMode(params.get('zenai') === '1' ? 'ai' : null);
         } catch (e) {
             return null;
         }
+    }
+
+    function normalizeMode(value) {
+        if (typeof value !== 'string') {
+            return null;
+        }
+
+        return value === 'ai' || value === 'classic' ? value : null;
+    }
+
+    function sanitizeStorageKey(value) {
+        if (typeof value !== 'string') {
+            return null;
+        }
+
+        return /^[a-zA-Z0-9._-]{1,64}$/.test(value) ? value : null;
     }
 });
